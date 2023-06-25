@@ -4,10 +4,10 @@ import {NavLink } from "react-router-dom";
 const NavBar = () => {
   return (
     <nav className="navBar">
-        <div class="navBarTitle">LMS</div>
+        <div className="navBarTitle">LMS</div>
         <ul>
             <input type="checkbox" id="checkbox_toggle" />
-            <label for="checkbox_toggle" class="toggleMenu">&#9776;</label>
+            <label for="checkbox_toggle" className="toggleMenu">&#9776;</label>
             
             <div className="navBarMenu">
                 <li>

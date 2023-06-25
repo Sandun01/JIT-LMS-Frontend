@@ -62,6 +62,7 @@
         text-align: center;
         padding: 16px 0;
         margin-top: 5px;
+        z-index: 1;
     }
 
     .navBarMenu li:hover {
@@ -125,12 +126,54 @@
 
 // ================================================================================================================
 
-// Classrooms Page
+// Classrooms Page | Global
 
 .classrooms-tbl{
     text-align: center;
     margin-top: 25px;
     margin-bottom: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    color: #000;
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.page-link:hover {
+    background-color: #f0f0f0;
+}
+
+.active {
+    font-weight: bold;
+}
+
+.previous,
+.next {
+    display: inline-block;
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.previous:hover,
+.next:hover {
+    background-color: #f0f0f0;
+}
+
+.previous-link,
+.next-link {
+    color: #000;
 }
 
 // End Classrooms Page
@@ -164,6 +207,27 @@
 
 
 
+
+// ================================================================================================================
+
+// Loader Component
+.loader-container{
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+.loader-spin {
+    margin: 5px;
+}
+
+.loader{
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+}
+
+// End Loader Component
 
 // ================================================================================================================
 
