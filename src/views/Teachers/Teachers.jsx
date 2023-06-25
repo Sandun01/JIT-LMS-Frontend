@@ -10,20 +10,22 @@ import {
   Table,
 } from "reactstrap";
 import ReactPaginate from "react-paginate";
+import Swal from "sweetalert2";
 
 import MainContainer from "../../components/MainContainer";
 import Title from "../../components/Title";
 import NoData from "../../components/NoData";
 import TeacherService from "../../services/TeacherService";
 import Loader from "../../components/Loader";
-import Swal from "sweetalert2";
+import TeacherClassroomModel from "./TeacherClassroomModel";
+import TeacherSubjectModel from "./TeacherSubjectModel";
 
 const Teacher = () => {
   const perPage = 10;
   const [teachers, setTeachers] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-
+  
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -31,6 +33,9 @@ const Teacher = () => {
     email: "",
   });
 
+  const [dialogToggleClass, setDialogToggleClass] = useState(false);
+  const [dialogToggleSubject, setDialogToggleSubject] = useState(false);
+  
   const getAllTeachers = async () => {
     await TeacherService.getAllTeachers()
       .then((res) => {
@@ -165,6 +170,26 @@ const Teacher = () => {
       <MainContainer>
         <Title title="LMS Teachers" />
 
+        {/* Allocations */}
+        <Container className="bg-light border p-4 my-4">
+          <Row>
+            <Col className="p-2 hover-bg-error">
+              <h4>Teacher Classroom Allocations</h4>
+              <Button className="text-white" color="success" onClick={() => setDialogToggleClass(!dialogToggleClass)}>
+                Class Allocation
+              </Button>
+              <TeacherClassroomModel isOpen={dialogToggleClass} toggleDialog={() => setDialogToggleClass(!dialogToggleClass)}/>
+            </Col>
+            <Col className="p-2">
+              <h4>Teacher Subject Allocations</h4>
+              <Button color="warning" onClick={() => setDialogToggleSubject(!dialogToggleSubject)}>
+                Subject Allocation
+              </Button>
+            </Col>
+            <TeacherSubjectModel isOpen={dialogToggleSubject} toggleDialog={() => setDialogToggleSubject(!dialogToggleSubject)}/>
+          </Row>
+        </Container>
+
         {/* Form */}
         <Form onSubmit={addNewTeacher}>
           <FormGroup row>
@@ -257,9 +282,6 @@ const Teacher = () => {
                     <td>{teacher.contact_no}</td>
                     <td>{teacher.email}</td>
                     <td>
-                      <Button className="m-1" color="warning">
-                        View
-                      </Button>
                       <Button
                         className="m-1"
                         color="danger"
