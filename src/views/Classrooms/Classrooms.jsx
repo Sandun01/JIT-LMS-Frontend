@@ -29,17 +29,15 @@ const Classrooms = () => {
   });
 
   const getAllClassrooms = async () => {
-    setTimeout(async () => {
-      await ClassroomService.getAllClassrooms()
-        .then((res) => {
-          // console.log(res);
-          setClassrooms(res);
-          setLoadingData(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }, 3000);
+    await ClassroomService.getAllClassrooms()
+      .then((res) => {
+        // console.log(res);
+        setClassrooms(res);
+        setLoadingData(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handlePageChange = ({ selected }) => {

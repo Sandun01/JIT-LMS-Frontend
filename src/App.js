@@ -9,6 +9,7 @@ import NavBar from './components/NavBar';
 import Classrooms from './views/Classrooms/Classrooms';
 import Students from './views/Student/Students';
 import Teachers from './views/Teachers/Teachers';
+import Subjects from './views/Subjects/Subjects';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/classrooms" element={<Classrooms />} />
         <Route path="/students" element={<Students />} />
         <Route path="/teachers" element={<Teachers />} />
+        <Route path="/subjects" element={<Subjects />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

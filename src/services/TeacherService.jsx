@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { Backend_API_URL } from '../Constants/AppConst';
 
-class ClassroomService {
+class TeacherService {
 
-    //Get all classrooms
-    async getAllClassrooms() {
+    //Get all Teachers
+    async getAllTeachers() {
         var return_value = [];
         await axios
-            .get(Backend_API_URL + "classroom")
+            .get(Backend_API_URL + "teacher")
             .then((res) => {
                 if (res.data) {
                     return_value = res.data
@@ -19,11 +19,11 @@ class ClassroomService {
         return return_value
     }
 
-    //Add Classroom
-    async addNewClassroom(data) {
+    //Add Teacher
+    async addNewTeacher(data) {
         var return_value = false
         await axios
-            .post(Backend_API_URL + "classroom", data)
+            .post(Backend_API_URL + "teacher", data)
             .then((res) => {
                 return_value = true;
             })
@@ -34,11 +34,11 @@ class ClassroomService {
         return return_value
     }
 
-    //Delete Classroom
-    async deleteClassroom(id) {
+    //Delete Teacher
+    async deleteTeacher(id) {
         var return_value = false
         await axios
-            .delete(Backend_API_URL + `classroom/${id}`)
+            .delete(Backend_API_URL + `teacher/${id}`)
             .then((res) => {
                 return_value = true;
             })
@@ -51,5 +51,5 @@ class ClassroomService {
 
 }
 
-export default new ClassroomService()
+export default new TeacherService()
 

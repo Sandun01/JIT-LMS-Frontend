@@ -30,6 +30,11 @@ const NavBar = () => {
                         Teachers
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink className="navLink" to="/subjects">
+                        Subjects
+                    </NavLink>
+                </li>
             </div>
         </ul>
     </nav>

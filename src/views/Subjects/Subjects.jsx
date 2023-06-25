@@ -14,25 +14,25 @@ import ReactPaginate from "react-paginate";
 import MainContainer from "../../components/MainContainer";
 import Title from "../../components/Title";
 import NoData from "../../components/NoData";
-import TeacherService from "../../services/TeacherService";
+import SubjectService from "../../services/SubjectService";
 import Loader from "../../components/Loader";
 import Swal from "sweetalert2";
 
-const Teacher = () => {
+const Subjects = () => {
   const perPage = 10;
-  const [teachers, setTeachers] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
   const [formData, setFormData] = useState({
-    first_name: "",
+    subject_name: "",
   });
 
-  const getAllTeachers = async () => {
-    await TeacherService.getAllTeachers()
+  const getAllSubjects = async () => {
+    await SubjectService.getAllSubjects()
       .then((res) => {
         // console.log(res);
-        setTeachers(res);
+        setSubjects(res);
         setLoadingData(false);
       })
       .catch((error) => {
@@ -46,7 +46,7 @@ const Teacher = () => {
 
   const getPageData = () => {
     const offset = currentPage * perPage;
-    const pageData = teachers.slice(offset, offset + perPage);
+    const pageData = subjects.slice(offset, offset + perPage);
     return pageData;
   };
 
@@ -58,11 +58,11 @@ const Teacher = () => {
     }));
   };
 
-  const addNewTeacher = async (e) => {
+  const addNewSubject = async (e) => {
     e.preventDefault();
     // console.log(e.target);
 
-    await TeacherService.addNewTeacher(formData)
+    await SubjectService.addNewSubject(formData)
       .then((res) => {
         if (res) {
           Swal.fire({
@@ -73,10 +73,10 @@ const Teacher = () => {
             timer: 1500,
           });
           setFormData({
-            first_name: "",
+            subject_name: "",
           });
           setLoadingData(true);
-          getAllTeachers();
+          getAllSubjects();
         } else {
           Swal.fire({
             position: "center",
@@ -99,7 +99,7 @@ const Teacher = () => {
       });
   };
 
-  const handleDeleteTeacher = (id) => {
+  const handleDeleteSubject = (id) => {
     Swal.fire({
       title: 'Do you want to delete?',
       icon: 'warning',
@@ -107,13 +107,13 @@ const Teacher = () => {
       confirmButtonText: 'Delete',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteTeacher(id);
+        deleteSubject(id);
       }
     })
   }
 
-  const deleteTeacher = async (id) => {
-    await TeacherService.deleteTeacher(id)
+  const deleteSubject = async (id) => {
+    await SubjectService.deleteSubject(id)
       .then((res) => {
         if (res) {
           Swal.fire({
@@ -124,10 +124,10 @@ const Teacher = () => {
             timer: 1500,
           });
           setFormData({
-            first_name: "",
+            subject_name: "",
           });
           setLoadingData(true);
-          getAllTeachers();
+          getAllSubjects();
         } else {
           Swal.fire({
             position: "center",
@@ -151,31 +151,31 @@ const Teacher = () => {
   };
 
   useEffect(() => {
-    getAllTeachers();
+    getAllSubjects();
   }, []);
 
   return (
     <div>
       <MainContainer>
-        <Title title="LMS teachers" />
+        <Title title="LMS Subjects" />
 
         {/* Form */}
-        <Form onSubmit={addNewTeacher}>
+        <Form onSubmit={addNewSubject}>
           <FormGroup row>
             <Container className="bg-light border p-4">
               <Row>
                 <Col className="p-2">
-                  <h4>Add New teacher</h4>
+                  <h4>Add New Subject</h4>
                 </Col>
               </Row>
               <Row>
                 <Col xs={6} sm={4} md={4} lg={4} xl={4}>
                   <Input
                     id="classNameInput"
-                    name="first_name"
-                    placeholder="teacher Name"
+                    name="subject_name"
+                    placeholder="Subject Name"
                     type="text"
-                    value={formData.first_name}
+                    value={formData.subject_name}
                     onChange={handleInputChange}
                     required
                   />
@@ -193,38 +193,29 @@ const Teacher = () => {
         {/* Data Table */}
         {loadingData && <Loader />}
 
-        {!loadingData && teachers && teachers.length > 0 && (
+        {!loadingData && subjects && subjects.length > 0 && (
           <>
             <Row>
               <Col className="mt-2">
-                <h4>Existing teachers</h4>
+                <h4>Existing subjects</h4>
               </Col>
             </Row>
             <Table responsive className="classrooms-tbl border" hover>
               <thead>
                 <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Contact Number</th>
-                  <th>Email</th>
+                  <th>Subject Name</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {getPageData().map((teacher, key) => (
+                {getPageData().map((subject, key) => (
                   <tr key={key}>
-                    <td>{teacher.first_name}</td>
-                    <td>{teacher.last_name}</td>
-                    <td>{teacher.contact_no}</td>
-                    <td>{teacher.email}</td>
+                    <td>{subject.subject_name}</td>
                     <td>
-                      <Button className="m-1" color="warning">
-                        View
-                      </Button>
-                      <Button className="m-1" color="secondary">
+                      {/* <Button className="m-1" color="warning">
                         Edit
-                      </Button>
-                      <Button className="m-1" color="danger" onClick={() => handleDeleteTeacher(teacher.teacher_id)}>
+                      </Button> */}
+                      <Button className="m-1" color="danger" onClick={() => handleDeleteSubject(subject.subject_id)}>
                         Delete
                       </Button>
                     </td>
@@ -237,7 +228,7 @@ const Teacher = () => {
               nextLabel={"Next"}
               breakLabel={"..."}
               breakClassName={"break-me"}
-              pageCount={Math.ceil(teachers.length / perPage)}
+              pageCount={Math.ceil(subjects.length / perPage)}
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}
               onPageChange={handlePageChange}
@@ -253,10 +244,10 @@ const Teacher = () => {
           </>
         )}
 
-        {!loadingData && teachers.length === 0 && <NoData />}
+        {!loadingData && subjects.length === 0 && <NoData />}
       </MainContainer>
     </div>
   );
 };
 
-export default Teacher;
+export default Subjects;
