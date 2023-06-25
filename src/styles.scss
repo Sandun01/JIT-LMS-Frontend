@@ -113,11 +113,83 @@
 
 // ================================================================================================================
 
+// Main Container
+
+.mainContainer-card {
+    margin: 50px;
+    padding: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+// End Main Container
+
+// ================================================================================================================
+
+// Classrooms Page
+
+.classrooms-tbl{
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+// End Classrooms Page
+
+// ================================================================================================================
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ================================================================================================================
+
+// No Data Page
+.no-data-img-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+ }
+
+.no-data-title{
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.no-data-img{
+    max-width: 300px;
+    max-height: 100vh;
+    margin: auto;
+}
+// End No Data Page
+
+
+// ================================================================================================================
 
 // Not Found View Styles
 .not-found-img-container {
