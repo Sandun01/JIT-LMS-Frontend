@@ -19,12 +19,15 @@ import StudentService from "../../services/StudentService";
 import Loader from "../../components/Loader";
 import Swal from "sweetalert2";
 import ClassroomService from "../../services/ClassroomService";
+import StudentReportModel from "./StudentReportModel";
 
 const Student = () => {
   const perPage = 10;
   const [students, setStudents] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
+
+  const [studentID, setStudentId] = useState(null);
 
   const [classrooms, setClassrooms] = useState([]);
 
@@ -38,6 +41,8 @@ const Student = () => {
     age: 0,
     classroom_id: "",
   });
+
+  const [dialogToggleView, setDialogToggleView] = useState(false);
 
   const getAllStudents = async () => {
     await StudentService.getAllStudents()
@@ -194,6 +199,11 @@ const Student = () => {
         console.log(error);
       });
   };
+
+  const handleViewStudent = (id) => {
+    setDialogToggleView(!dialogToggleView);
+    setStudentId(id);
+  }
 
   useEffect(() => {
     getAllStudents();
@@ -356,9 +366,9 @@ const Student = () => {
                     <td>{student.dob.split("T", 1)}</td>
                     <td>{student.age}</td>
                     <td>
-                      <Button className="m-1" color="warning">
+                      <Button className="m-1" color="warning" onClick={() => handleViewStudent(student.student_id)}>
                         View
-                      </Button>
+                      </Button>   
                       <Button
                         className="m-1"
                         color="danger"
@@ -389,6 +399,17 @@ const Student = () => {
               previousLinkClassName={"page-link"}
               nextLinkClassName={"page-link"}
             />
+
+            {/* Student Dialog box */}
+            {
+              dialogToggleView &&
+              <StudentReportModel
+                isOpen={dialogToggleView} 
+                studentID={studentID}
+                toggleDialog={() => setDialogToggleView(!dialogToggleView)}
+              />
+            }
+
           </>
         )}
 

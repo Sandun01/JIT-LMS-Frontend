@@ -19,6 +19,22 @@ class StudentService {
         return return_value
     }
 
+    //Get Student Data
+    async getStudentById(id) {
+        var return_value = [];
+        await axios
+            .get(Backend_API_URL + "student/"+id)
+            .then((res) => {
+                if (res.data) {
+                    return_value = res.data
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        return return_value
+    }
+
     //Add Student
     async addNewStudent(data) {
         var return_value = false
