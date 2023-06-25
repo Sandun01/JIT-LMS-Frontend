@@ -253,6 +253,7 @@ const Student = () => {
                     placeholder="Contact Number"
                     type="text"
                     maxLength={12}
+                    minLength={10}
                     value={formData.contact_no}
                     onChange={handleInputChange}
                     required

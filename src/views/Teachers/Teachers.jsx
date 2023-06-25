@@ -26,6 +26,9 @@ const Teacher = () => {
 
   const [formData, setFormData] = useState({
     first_name: "",
+    last_name: "",
+    contact_no: "",
+    email: "",
   });
 
   const getAllTeachers = async () => {
@@ -60,7 +63,7 @@ const Teacher = () => {
 
   const addNewTeacher = async (e) => {
     e.preventDefault();
-    // console.log(e.target);
+    // console.log(formData);
 
     await TeacherService.addNewTeacher(formData)
       .then((res) => {
@@ -74,6 +77,9 @@ const Teacher = () => {
           });
           setFormData({
             first_name: "",
+            last_name: "",
+            contact_no: "",
+            email: "",
           });
           setLoadingData(true);
           getAllTeachers();
@@ -101,16 +107,16 @@ const Teacher = () => {
 
   const handleDeleteTeacher = (id) => {
     Swal.fire({
-      title: 'Do you want to delete?',
-      icon: 'warning',
+      title: "Do you want to delete?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Delete',
+      confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
         deleteTeacher(id);
       }
-    })
-  }
+    });
+  };
 
   const deleteTeacher = async (id) => {
     await TeacherService.deleteTeacher(id)
@@ -157,7 +163,7 @@ const Teacher = () => {
   return (
     <div>
       <MainContainer>
-        <Title title="LMS teachers" />
+        <Title title="LMS Teachers" />
 
         {/* Form */}
         <Form onSubmit={addNewTeacher}>
@@ -168,11 +174,11 @@ const Teacher = () => {
                   <h4>Add New teacher</h4>
                 </Col>
               </Row>
-              <Row>
+              <Row className="mt-3">
                 <Col xs={6} sm={4} md={4} lg={4} xl={4}>
                   <Input
                     name="first_name"
-                    placeholder="teacher Name"
+                    placeholder="First Name"
                     type="text"
                     value={formData.first_name}
                     onChange={handleInputChange}
@@ -180,8 +186,42 @@ const Teacher = () => {
                   />
                 </Col>
                 <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Input
+                    name="last_name"
+                    placeholder="Last Name"
+                    type="text"
+                    value={formData.last_name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Col>
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Input
+                    name="contact_no"
+                    placeholder="Contact Number"
+                    type="text"
+                    maxLength={12}
+                    minLength={10}
+                    value={formData.contact_no}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Input
+                    name="email"
+                    placeholder="Email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Col>
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
                   <Button type="submit" color="primary">
-                    Add New
+                    Add New Teacher
                   </Button>
                 </Col>
               </Row>
@@ -220,10 +260,11 @@ const Teacher = () => {
                       <Button className="m-1" color="warning">
                         View
                       </Button>
-                      <Button className="m-1" color="secondary">
-                        Edit
-                      </Button>
-                      <Button className="m-1" color="danger" onClick={() => handleDeleteTeacher(teacher.teacher_id)}>
+                      <Button
+                        className="m-1"
+                        color="danger"
+                        onClick={() => handleDeleteTeacher(teacher.teacher_id)}
+                      >
                         Delete
                       </Button>
                     </td>
