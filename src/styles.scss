@@ -1,0 +1,140 @@
+// NavBar Styles 
+.navBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: teal;
+    color: #fff;
+}
+
+.navBarTitle {
+    font-size: 32px;
+}
+
+.navBarMenu{
+    display: flex;
+    gap: 1em;
+    font-size: 20px;
+    list-style: none;
+}
+
+.navBarMenu li {
+    padding: 5px 14px;
+}
+
+.navLink {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navLink:hover {
+    color: #000000;
+    background-color: #4c9e9e;
+    border-radius: 5px;
+    padding: 10px;
+    transition: 0.3s ease;
+}
+
+.navLink.active {
+    color: #f3980f;
+    font-weight: 700;
+}
+
+#checkbox_toggle {
+    display: none;
+} 
+
+.toggleMenu {
+    display: none;
+    font-size: 24px;
+    user-select: none;
+}
+
+// @Responsive
+@media (max-width: 700px) {
+    .navBarMenu {
+        display:none;
+        position: absolute;
+        background-color:teal;
+        right: 0;
+        left: 0;
+        text-align: center;
+        padding: 16px 0;
+        margin-top: 5px;
+    }
+
+    .navBarMenu li:hover {
+        display: inline-block;
+        transition: 0.3s ease;
+    }
+
+    .navBarMenu li + li {
+        margin-top: 12px;
+    }
+
+    #checkbox_toggle:checked ~ .navBarMenu {
+        display: block;
+    }
+
+    .toggleMenu {
+        display: block;
+    }
+}
+// End NavBar Styles
+
+// ================================================================================================================
+
+// Home Page
+
+.home-title-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.home-img-container{
+   display: flex;
+   align-items: center;
+}
+
+.home-img-container{
+    display: grid;
+    height: 100%;
+}
+
+.home-img {
+    max-width: 100%;
+    max-height: 100vh;
+    margin: auto;
+}
+
+// End Home Page
+
+// ================================================================================================================
+
+
+
+
+
+
+
+// Not Found View Styles
+.not-found-img-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column; 
+}
+
+.not-found-img {
+    max-width: 100%;
+    width: 500px;
+    height: auto;
+}
+
+// End Not Found View Styles
+
+
