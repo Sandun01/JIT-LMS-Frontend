@@ -6,6 +6,7 @@ import {
   Form,
   FormGroup,
   Input,
+  Label,
   Row,
   Table,
 } from "reactstrap";
@@ -17,6 +18,7 @@ import NoData from "../../components/NoData";
 import StudentService from "../../services/StudentService";
 import Loader from "../../components/Loader";
 import Swal from "sweetalert2";
+import ClassroomService from "../../services/ClassroomService";
 
 const Student = () => {
   const perPage = 10;
@@ -24,8 +26,17 @@ const Student = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const [classrooms, setClassrooms] = useState([]);
+
   const [formData, setFormData] = useState({
     first_name: "",
+    last_name: "",
+    contact_person: "",
+    contact_no: "",
+    email: "",
+    dob: "",
+    age: 0,
+    classroom_id: "",
   });
 
   const getAllStudents = async () => {
@@ -52,6 +63,11 @@ const Student = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
+    if(name == "dob"){
+      calculateAge(value);
+    }
+
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -60,7 +76,7 @@ const Student = () => {
 
   const addNewStudent = async (e) => {
     e.preventDefault();
-    // console.log(e.target);
+    // console.log(formData);
 
     await StudentService.addNewStudent(formData)
       .then((res) => {
@@ -74,6 +90,13 @@ const Student = () => {
           });
           setFormData({
             first_name: "",
+            last_name: "",
+            contact_person: "",
+            contact_no: "",
+            email: "",
+            dob: "",
+            age: 0,
+            classroom_id: "",
           });
           setLoadingData(true);
           getAllStudents();
@@ -97,6 +120,15 @@ const Student = () => {
           timer: 1500,
         });
       });
+  };
+
+  const calculateAge = (dob) => {
+    let age = 0;
+    const birth = new Date(dob);
+    const today = new Date();
+    age = today.getFullYear() - birth.getFullYear();
+
+    formData['age'] = age;
   };
 
   const handleDeleteStudent = (id) => {
@@ -150,8 +182,22 @@ const Student = () => {
       });
   };
 
+  const getAllClassrooms = async () => {
+    setLoadingData(true);
+    await ClassroomService.getAllClassrooms()
+      .then((res) => {
+        // console.log(res);
+        setClassrooms(res);
+        setLoadingData(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     getAllStudents();
+    getAllClassrooms();
   }, []);
 
   return (
@@ -168,12 +214,11 @@ const Student = () => {
                   <h4>Add New Student</h4>
                 </Col>
               </Row>
-              <Row>
+              <Row className="mt-3">
                 <Col xs={6} sm={4} md={4} lg={4} xl={4}>
                   <Input
-                    id="classNameInput"
                     name="first_name"
-                    placeholder="Student Name"
+                    placeholder="First Name"
                     type="text"
                     value={formData.first_name}
                     onChange={handleInputChange}
@@ -181,8 +226,96 @@ const Student = () => {
                   />
                 </Col>
                 <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Input
+                    name="last_name"
+                    placeholder="Last Name"
+                    type="text"
+                    value={formData.last_name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Col>
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Input
+                    name="contact_person"
+                    placeholder="Contact Person"
+                    type="text"
+                    value={formData.contact_person}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Input
+                    name="contact_no"
+                    placeholder="Contact Number"
+                    type="text"
+                    maxLength={12}
+                    value={formData.contact_no}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Col>
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Input
+                    name="email"
+                    placeholder="Email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Col>
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Input
+                    name="dob"
+                    placeholder="Date of Birth"
+                    type="date"
+                    value={formData.dob}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  {/* classrooms */}
+                  <Label>Select Classroom</Label>
+                  <Input
+                    name="classroom_id"
+                    type="select"
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option key="default" value="">
+                      Select a classroom
+                    </option>
+                    {classrooms.length > 0 &&
+                      classrooms.map((classroom, k) => (
+                        <option key={k} value={classroom.classroom_id}>
+                          {classroom.classroom_name}
+                        </option>
+                      ))}
+                  </Input>
+                </Col>
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
+                  <Label>Age</Label>
+                  <Input
+                    name="Age"
+                    placeholder="Age"
+                    type="text"
+                    value={formData.age}
+                    readOnly
+                    disabled
+                  />
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col xs={6} sm={4} md={4} lg={4} xl={4}>
                   <Button type="submit" color="primary">
-                    Add New
+                    Add New Student
                   </Button>
                 </Col>
               </Row>
@@ -207,7 +340,6 @@ const Student = () => {
                   <th>Last Name</th>
                   <th>Contact Number</th>
                   <th>Email</th>
-                  <th>Contact Person</th>
                   <th>DOB</th>
                   <th>Age</th>
                   <th>Actions</th>
@@ -220,15 +352,11 @@ const Student = () => {
                     <td>{student.last_name}</td>
                     <td>{student.contact_no}</td>
                     <td>{student.email}</td>
-                    <td>{student.contact_person}</td>
                     <td>{student.dob.split("T", 1)}</td>
                     <td>{student.age}</td>
                     <td>
                       <Button className="m-1" color="warning">
                         View
-                      </Button>
-                      <Button className="m-1" color="secondary">
-                        Edit
                       </Button>
                       <Button
                         className="m-1"

@@ -171,7 +171,6 @@ const Teacher = () => {
               <Row>
                 <Col xs={6} sm={4} md={4} lg={4} xl={4}>
                   <Input
-                    id="classNameInput"
                     name="first_name"
                     placeholder="teacher Name"
                     type="text"

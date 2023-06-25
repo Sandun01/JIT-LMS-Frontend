@@ -171,7 +171,6 @@ const Subjects = () => {
               <Row>
                 <Col xs={6} sm={4} md={4} lg={4} xl={4}>
                   <Input
-                    id="classNameInput"
                     name="subject_name"
                     placeholder="Subject Name"
                     type="text"

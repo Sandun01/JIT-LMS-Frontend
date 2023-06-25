@@ -171,7 +171,6 @@ const Classrooms = () => {
               <Row>
                 <Col xs={6} sm={4} md={4} lg={4} xl={4}>
                   <Input
-                    id="classNameInput"
                     name="classroom_name"
                     placeholder="Classroom Name"
                     type="text"
